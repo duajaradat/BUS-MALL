@@ -19,6 +19,7 @@ let maxAttempts = 25;
 
 //constructor fuction 
 
+
 function Products(productName) {
     this.Name = productName.split('.')[0];
     this.path = "images/" + productName
@@ -42,46 +43,81 @@ let leftIndex;
 let centerIndex;
 let rightIndex;
 
+let noRepeatSndI = []; //for no rep 2nd iteration
+
 function randomDisplyProduct() {
     return Math.floor(Math.random() * products.length);
 }
 
-let noRepeatSndI=[];
 
 function renderRandomProduct() {
     leftIndex = randomDisplyProduct();
     centerIndex = randomDisplyProduct();
     rightIndex = randomDisplyProduct();
-     
+
     //no repeat products in the same attempt
 
     // while (leftIndex === centerIndex || leftIndex === rightIndex || centerIndex === rightIndex) {
     //     leftIndex = randomDisplyProduct();
     //     centerIndex = randomDisplyProduct();
-        
+
     // }
 
+     function noRepeat(){
 
-    while (leftIndex === centerIndex || leftIndex === rightIndex || centerIndex === rightIndex || noRepeatSndI.includes(leftIndex) || noRepeatSndI.includes(centerIndex) ||noRepeatSndI.includes(rightIndex)) {
-        leftIndex = randomDisplyProduct();
-        centerIndex = randomDisplyProduct();    
+         if (noRepeatSndI.includes(leftIndex)){
+             
+             leftIndex = randomDisplyProduct();
+            
+         }
+         else  if(centerIndex === leftIndex || noRepeatSndI.includes(centerIndex)){
+             
+             centerIndex = randomDisplyProduct();
+
+         }
+          if (rightIndex === centerIndex || rightIndex === leftIndex || noRepeatSndI.includes(rightIndex)){
+              
+            rightIndex = randomDisplyProduct();
+         }   
+        }
+        
+            noRepeat();    
+     
+     noRepeatSndI = [];
+
+     leftImg.setAttribute("src", products[leftIndex].path);
+     products[leftIndex].view++;
+
+    
+     centerImg.setAttribute("src", products[centerIndex].path);
+     products[centerIndex].view++;
+
+     rightImg.setAttribute("src", products[rightIndex].path);
+     products[rightIndex].view++;
+     
+     
+     noRepeatSndI.push(leftIndex);
+     noRepeatSndI.push(centerIndex);
+     noRepeatSndI.push(rightIndex);
+     
+     
+     console.log(noRepeatSndI);
     }
     
-    noRepeatSndI.push(leftIndex);
-    noRepeatSndI.push(centerIndex);
-    noRepeatSndI.push(rightIndex);
     
-    console.log(noRepeatSndI);
 
-    leftImg.setAttribute("src", products[leftIndex].path);
-    centerImg.setAttribute("src", products[centerIndex].path);
-    rightImg.setAttribute("src", products[rightIndex].path);
 
-    products[leftIndex].view++;
-    products[centerIndex].view++;
-    products[rightIndex].view++;
-}
 renderRandomProduct();
+
+
+
+
+
+
+
+
+
+
 
 
 function clickProduct(event) {
@@ -103,10 +139,10 @@ function clickProduct(event) {
 
         button.textContent = "View Result";
 
-        button.addEventListener("click", showResult); 
-        button.addEventListener("click",resultChartRender );
+        button.addEventListener("click", showResult);
+        button.addEventListener("click", resultChartRender);
 
-        
+
 
 
         leftImg.removeEventListener("click", clickProduct);
@@ -114,8 +150,8 @@ function clickProduct(event) {
         rightImg.removeEventListener("click", clickProduct);
 
         resultChartRender();
-         
-       
+
+
     }
 
     attempts++;
@@ -126,11 +162,11 @@ function showResult() {
         let pEl = document.createElement("p");
         section.appendChild(pEl)
         pEl.textContent = `${products[i].Name} displayed ${products[i].view} times and picked ${products[i].pick} times`;
-       
+
         picksArray.push(products[i].pick);
-        viewsArray.push(products[i].view); 
+        viewsArray.push(products[i].view);
     }
-    
+
 }
 
 
@@ -149,16 +185,16 @@ function resultChartRender() {
             datasets: [{
                 label: '# of Picks',
                 data: picksArray,
-                backgroundColor: ['black']
+                backgroundColor: ['black', 'black', 'black', 'black', 'black', 'black', 'black', 'black', 'black', 'black', 'black', 'black', 'black', 'black', 'black', 'black', 'black', 'black', 'black']
                 ,
-                borderColor:['black'] 
+                borderColor: ['black']
                 ,
                 borderWidth: 1
             }, {
                 label: '# of Views',
                 data: viewsArray,
                 backgroundColor: [
-                    'rgb(16, 80, 59)'
+                    'rgb(16, 80, 59)', 'rgb(16, 80, 59)', 'rgb(16, 80, 59)', 'rgb(16, 80, 59)', 'rgb(16, 80, 59)', 'rgb(16, 80, 59)', 'rgb(16, 80, 59)', 'rgb(16, 80, 59)', 'rgb(16, 80, 59)', 'rgb(16, 80, 59)', 'rgb(16, 80, 59)', 'rgb(16, 80, 59)', 'rgb(16, 80, 59)', 'rgb(16, 80, 59)', 'rgb(16, 80, 59)', 'rgb(16, 80, 59)', 'rgb(16, 80, 59)', 'rgb(16, 80, 59)', 'rgb(16, 80, 59)'
                 ],
                 borderColor: [
                     'brgb(16, 80, 59)'
@@ -169,9 +205,9 @@ function resultChartRender() {
         options: {
             scales: {
                 yAxes: [{
-                    ticks:{
-                    beginAtZero: true
-                }
+                    ticks: {
+                        beginAtZero: true
+                    }
                 }]
             }
         }
