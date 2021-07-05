@@ -63,60 +63,35 @@ function renderRandomProduct() {
 
     // }
 
-     function noRepeat(){
 
-         if (noRepeatSndI.includes(leftIndex)){
-             
-             leftIndex = randomDisplyProduct();
-            
-         }
-         else  if(centerIndex === leftIndex || noRepeatSndI.includes(centerIndex)){
-             
-             centerIndex = randomDisplyProduct();
 
-         }
-          if (rightIndex === centerIndex || rightIndex === leftIndex || noRepeatSndI.includes(rightIndex)){
-              
-            rightIndex = randomDisplyProduct();
-         }   
-        }
-        
-            noRepeat();    
-     
-     noRepeatSndI = [];
 
-     leftImg.setAttribute("src", products[leftIndex].path);
-     products[leftIndex].view++;
+    while (leftIndex === rightIndex || centerIndex === rightIndex || centerIndex === leftIndex || noRepeatSndI.includes(leftIndex) || noRepeatSndI.includes(centerIndex) || noRepeatSndI.includes(rightIndex)) {
 
-    
-     centerImg.setAttribute("src", products[centerIndex].path);
-     products[centerIndex].view++;
+        leftIndex = randomDisplyProduct();
+        centerIndex = randomDisplyProduct();
+        rightIndex = randomDisplyProduct();
 
-     rightImg.setAttribute("src", products[rightIndex].path);
-     products[rightIndex].view++;
-     
-     
-     noRepeatSndI.push(leftIndex);
-     noRepeatSndI.push(centerIndex);
-     noRepeatSndI.push(rightIndex);
-     
-     
-     console.log(noRepeatSndI);
     }
-    
-    
 
+    leftImg.setAttribute("src", products[leftIndex].path);
+    products[leftIndex].view++;
+
+
+    centerImg.setAttribute("src", products[centerIndex].path);
+    products[centerIndex].view++;
+
+    rightImg.setAttribute("src", products[rightIndex].path);
+    products[rightIndex].view++;
+
+    noRepeatSndI[0]=leftIndex ;
+    noRepeatSndI[1]=centerIndex ;
+    noRepeatSndI[2]=rightIndex ;
+
+     console.log(noRepeatSndI);
+}
 
 renderRandomProduct();
-
-
-
-
-
-
-
-
-
 
 
 
